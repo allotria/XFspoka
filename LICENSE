@@ -1,0 +1,18 @@
+This software is Copyright (C) 2012 by Manuel Stadelmann. Use is subject to 
+license conditions. The different parts of the projects have different 
+license models. This is mainly due to the different licensing models of the
+used libraries.
+
+'XFserver':
+The XFserver is licensed under the Creative Commons 2.5 license (CC-BY-SA).
+
+
+'XFtransmit' and 'XFghost':
+'XFtransmit' and 'XFghost' are both licensed under GNU GPL V2 
+(see http://www.gnu.org/copyleft/gpl.html) due to it's use
+of Mike McCauley's 'VirtualWire' library. 
+The Arduino sketches on their own are licensed under the 
+Creative Commons 2.5 license (CC-BY-SA).
+If you want to use the sketches commercially, contact Mike McCauley
+for commercial licensing of VirtualWire.
+
