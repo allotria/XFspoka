@@ -1,0 +1,18 @@
+<classpath>
+  <classpathentry output=".target/scala-2.9.1/classes" path="src/main/scala" kind="src"></classpathentry>
+  <classpathentry output=".target/scala-2.9.1/classes" path="src/main/java" kind="src"></classpathentry>
+  <classpathentry output=".target/scala-2.9.1/classes" path="target/scala-2.9.1/src_managed/main" kind="src"></classpathentry>
+  <classpathentry output=".target/scala-2.9.1/classes" path="src/main/resources" kind="src"></classpathentry>
+  <classpathentry output=".target/scala-2.9.1/classes" path="target/scala-2.9.1/resource_managed/main" kind="src"></classpathentry>
+  <classpathentry output=".target/scala-2.9.1/test-classes" path="src/test/scala" kind="src"></classpathentry>
+  <classpathentry output=".target/scala-2.9.1/test-classes" path="src/test/java" kind="src"></classpathentry>
+  <classpathentry output=".target/scala-2.9.1/test-classes" path="target/scala-2.9.1/src_managed/test" kind="src"></classpathentry>
+  <classpathentry output=".target/scala-2.9.1/test-classes" path="src/test/resources" kind="src"></classpathentry>
+  <classpathentry output=".target/scala-2.9.1/test-classes" path="target/scala-2.9.1/resource_managed/test" kind="src"></classpathentry>
+  <classpathentry path="/Users/mansta/.ivy2/cache/org.specs2/specs2_2.9.1/jars/specs2_2.9.1-1.7.1.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/mansta/.ivy2/cache/org.specs2/specs2-scalaz-core_2.9.1/jars/specs2-scalaz-core_2.9.1-6.0.1.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/mansta/.ivy2/cache/junit/junit/jars/junit-4.7.jar" kind="lib"></classpathentry>
+  <classpathentry path="org.scala-ide.sdt.launching.SCALA_CONTAINER" kind="con"></classpathentry>
+  <classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"></classpathentry>
+  <classpathentry path=".target/scala-2.9.1/classes" kind="output"></classpathentry>
+</classpath>
