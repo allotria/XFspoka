@@ -51,7 +51,7 @@ void loop() {
      
     while(Serial.available() > 0 && serialIndex < BUFFER_LEN) {
        serialIn = Serial.read();
-       serialBuffer[serialIndex] = serialIn;
+       serialBuffer[serialIndex++] = serialIn;
     }
     
     Serial.print("RED: ");
