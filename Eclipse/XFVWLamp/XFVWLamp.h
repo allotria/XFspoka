@@ -21,7 +21,9 @@ void setup();
 #endif
 
 //add your function definitions for the project XFVWLamp here
-
+void _selfTest();
+void lightUpLed1(uint8_t serialBuffer[]);
+void lightUpLed2(uint8_t serialBuffer[]);
 
 
 

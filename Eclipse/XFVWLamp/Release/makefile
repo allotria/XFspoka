@@ -65,7 +65,7 @@ all: XFVWLamp.elf secondary-outputs
 XFVWLamp.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: AVR C++ Linker'
-	avr-gcc -Os -Wl,--gc-sections  -L"/Users/mansta/Documents/workspaces/Arduino/Arduino_Uno/Release" -mmcu=atmega328p -o"XFVWLamp.elf" $(OBJS) $(USER_OBJS) $(LIBS) -lm
+	avr-gcc -Os -Wl,--gc-sections  -L"/Users/mansta/Projects/XFspoka/Eclipse/Arduino_Nano_w__ATmega328/Release" -mmcu=atmega328p -o"XFVWLamp.elf" $(OBJS) $(USER_OBJS) $(LIBS) -lm
 	@echo 'Finished building target: $@'
 	@echo ' '
 

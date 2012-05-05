@@ -17,7 +17,7 @@ CPP_DEPS += \
 VirtualWire/VirtualWire.o: /Users/mansta/Documents/Arduino/libraries/VirtualWire/VirtualWire.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: AVR C++ Compiler'
-	avr-g++ -I"/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino" -I"/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/standard" -I"/Users/mansta/Documents/workspaces/Arduino/XFVWLamp" -I"/Users/mansta/Documents/Arduino/libraries/VirtualWire" -D__IN_ECLIPSE__=1 -DARDUINO=100 -Wall -Os -ffunction-sections -fdata-sections -fno-exceptions -g -mmcu=atmega328p -DF_CPU=16000000UL -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -c -o "$@" -x c++ "$<"
+	avr-g++ -I"/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino" -I"/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/eightanaloginputs" -I"/Users/mansta/Projects/XFspoka/Eclipse/XFVWLamp" -I"/Users/mansta/Documents/Arduino/libraries/VirtualWire" -D__IN_ECLIPSE__=1 -DARDUINO=100 -Wall -Os -ffunction-sections -fdata-sections -fno-exceptions -g -mmcu=atmega328p -DF_CPU=16000000UL -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -c -o "$@" -x c++ "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
