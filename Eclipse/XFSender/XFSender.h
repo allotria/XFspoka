@@ -21,7 +21,7 @@ void setup();
 #endif
 
 //add your function definitions for the project XFSender here
-
+void send(byte *data, int nbrOfBytes);
 
 
 
