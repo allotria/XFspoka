@@ -51,14 +51,22 @@ static int LED1_RED = 3;
 static int LED1_GREEN = 5;
 static int LED1_BLUE = 6;
 
-// PWM pins for LED 2
+// ON/OFF pins for LED 2
+/*
+ * Pins 9 and 10 both use the Timer1 for PWM. Unfortunately VirtualWire uses Timer1 as well
+ * thus rendering those pins useless (for PWM).
+ */
 static int LED2_RED = 9;
 static int LED2_GREEN = 10;
 static int LED2_BLUE = 11;
 
-// VirtualWire RX pin
-static int RX_PIN = 7;
+// VirtualWire pin definitions
+static int RX_PIN = 7; // receive pin
+// the TX and PTT functions of VirtualWire are not used in the lamp
+// as we are only receiving data. I reassign them to unused pins
+// just to make sure there are no side effects ;-)
 static int TX_PIN = 8;
+static int PTT_PIN = 2;
 
 const int numberOfValues = 6; // how many values to receive
 
@@ -88,6 +96,8 @@ void setup() {
 	// Initialize and start VirtualWire
 	vw_set_rx_pin(RX_PIN); // Set the receive pin to RX_PIN
 	vw_set_tx_pin(TX_PIN);
+	vw_set_ptt_pin(PTT_PIN);
+
 	vw_setup(2000); // Bits per sec
 	vw_rx_start(); // Start the receiver PLL running
 }
@@ -95,7 +105,7 @@ void setup() {
 void loop() {
 
 	if (vw_get_message((byte*) data, &msgLength)) { // Non-blocking {
-		cli(); // disable interrupts
+		vw_rx_stop(); // stop the receiver to free up interrupt cycles
 		Serial.println("Got: ");
 		if (msgLength == dataBytes) {
 			lightUpLed1(data[0], data[1], data[2]);
@@ -106,30 +116,30 @@ void loop() {
 		}
 		Serial.println();
 		delay(50); // give the circuit some rest, it deserves it ;-)
-		sei(); // re-enable interrupts
+		vw_rx_start(); // restart the receiver
 	}
 }
 
 void _selfTest() {
 	int _selfTestDelay = 200;
 // quickly light up all LEDs
-	analogWrite(LED1_RED, 255);
-	analogWrite(LED2_RED, 255);
+	digitalWrite(LED1_RED, HIGH);
+	digitalWrite(LED2_RED, HIGH);
 	delay(_selfTestDelay);
-	analogWrite(LED1_RED, 0);
-	analogWrite(LED2_RED, 0);
+	digitalWrite(LED1_RED, LOW);
+	digitalWrite(LED2_RED, LOW);
 
-	analogWrite(LED1_GREEN, 255);
-	analogWrite(LED2_GREEN, 255);
+	digitalWrite(LED1_GREEN, HIGH);
+	digitalWrite(LED2_GREEN, HIGH);
 	delay(_selfTestDelay);
-	analogWrite(LED1_GREEN, 0);
-	analogWrite(LED2_GREEN, 0);
+	digitalWrite(LED1_GREEN, LOW);
+	digitalWrite(LED2_GREEN, LOW);
 
-	analogWrite(LED1_BLUE, 255);
-	analogWrite(LED2_BLUE, 255);
+	digitalWrite(LED1_BLUE, HIGH);
+	digitalWrite(LED2_BLUE, HIGH);
 	delay(_selfTestDelay);
-	analogWrite(LED1_BLUE, 0);
-	analogWrite(LED2_BLUE, 0);
+	digitalWrite(LED1_BLUE, LOW);
+	digitalWrite(LED2_BLUE, LOW);
 }
 
 /*
@@ -152,14 +162,22 @@ void lightUpLed1(int red, int green, int blue) {
  * Let the LED2 shine with the color values from the last three bytes of the serialBuffer.
  */
 void lightUpLed2(int red, int green, int blue) {
-	analogWrite(LED2_RED, red);
-	analogWrite(LED2_GREEN, green);
-	analogWrite(LED2_BLUE, blue);
+
 	Serial.print("LED 2: ");
-	Serial.print(red);
-	Serial.print(" ");
-	Serial.print(green);
-	Serial.print(" ");
-	Serial.print(blue);
-	Serial.println();
+	Serial.print("R-");
+	Serial.print(_onOff(LED2_RED, red));
+	Serial.print(" G-");
+	Serial.print(_onOff(LED2_GREEN, green));
+	Serial.print(" B-");
+	Serial.print(_onOff(LED2_BLUE, blue));
+}
+
+int _onOff(int pin, int value) {
+	if (value > 0) {
+		digitalWrite(pin, HIGH);
+		return 1;
+	} else {
+		digitalWrite(pin, LOW);
+		return 0;
+	}
 }

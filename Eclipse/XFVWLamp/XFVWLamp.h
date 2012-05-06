@@ -24,6 +24,7 @@ void setup();
 void _selfTest();
 void lightUpLed1(int red, int green, int blue);
 void lightUpLed2(int red, int green, int blue);
+int _onOff(int pin, int value);
 
 
 
