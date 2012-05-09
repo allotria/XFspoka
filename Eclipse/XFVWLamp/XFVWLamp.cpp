@@ -4,7 +4,7 @@
 
  XFVWLamp sketch
 
- Reads values from a 433Mhz RF link and lights up two RGB LEDs accordingly.
+ Reads values from a 433MHz RF link and lights up two RGB LEDs accordingly.
 
  Notes:
  ------
@@ -20,6 +20,15 @@
  |  2  | green |      10     |
  |     | blue  |      11     |
  +-----+-------+-------------+
+
+
+ The received messages consist of six integer values signifying the
+ color values for the two LEDs.
+ - LED 1 accepts values from 0 to 255 for the channels RED, GREEN and BLUE
+   (in this order). Values above or below are interpreted as 0 or 255
+   respectively.
+ - LED 2 only accepts ON/OFF values (due to the lack of PWM ports).
+   Positive values are treated as ON, zero or negative as OFF.
 
 
  Please use a VirtualWire (http://groups.google.com/group/virtualwire)
@@ -89,7 +98,7 @@ void setup() {
 
 	_selfTest();
 
-	// Start serial communication
+	// Start serial communication for debug output
 	Serial.begin(9600);
 	Serial.println("XFVWLamp ready");
 
@@ -105,7 +114,6 @@ void setup() {
 void loop() {
 
 	if (vw_get_message((byte*) data, &msgLength)) { // Non-blocking {
-		vw_rx_stop(); // stop the receiver to free up interrupt cycles
 		Serial.println("Got: ");
 		if (msgLength == dataBytes) {
 			lightUpLed1(data[0], data[1], data[2]);
@@ -116,7 +124,6 @@ void loop() {
 		}
 		Serial.println();
 		delay(50); // give the circuit some rest, it deserves it ;-)
-		vw_rx_start(); // restart the receiver
 	}
 }
 
@@ -143,23 +150,24 @@ void _selfTest() {
 }
 
 /*
- * Let the LED1 shine with the color values from the first three bytes of the serialBuffer.
+ * Let the LED1 shine with the given color values.
  */
 void lightUpLed1(int red, int green, int blue) {
-	Serial.print("LED 1: ");
+
+	Serial.print("LED 1: R");
 	Serial.print(red);
-	Serial.print(" ");
+	Serial.print(" G");
 	Serial.print(green);
-	Serial.print(" ");
+	Serial.print(" B");
 	Serial.print(blue);
 	Serial.println();
-	analogWrite(LED1_RED, red);
-	analogWrite(LED1_GREEN, green);
-	analogWrite(LED1_BLUE, blue);
+	analogWrite(LED1_RED, _normalizeValue(red));
+	analogWrite(LED1_GREEN, _normalizeValue(green));
+	analogWrite(LED1_BLUE, _normalizeValue(blue));
 }
 
 /*
- * Let the LED2 shine with the color values from the last three bytes of the serialBuffer.
+ * Let the LED2 shine with the given color values.
  */
 void lightUpLed2(int red, int green, int blue) {
 
@@ -180,4 +188,13 @@ int _onOff(int pin, int value) {
 		digitalWrite(pin, LOW);
 		return 0;
 	}
+}
+
+int _normalizeValue(int in) {
+	if (in > 255) {
+		return 255;
+	} else if (in < 0) {
+		return 0;
+	}
+	return in;
 }

@@ -25,7 +25,7 @@ void _selfTest();
 void lightUpLed1(int red, int green, int blue);
 void lightUpLed2(int red, int green, int blue);
 int _onOff(int pin, int value);
-
+int _normalizeValue(int in);
 
 
 //Do not add code below this line
